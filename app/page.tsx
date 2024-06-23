@@ -3,12 +3,21 @@ import { CarCard } from "@/components";
 import CustomFilter from "@/components/CustomFilter";
 import Hero from "@/components/Hero";
 import SearchBar from "@/components/SearchBar";
+import { manufacturers } from "@/constants";
 import { fetchCars } from "@/utils";
 import Image from "next/image";
 
-export default async function Home() {
-  const allCars=await fetchCars();
+export default async function Home({searchParams}) {
+  const allCars=await fetchCars({
+    manufacturer:searchParams.manufacturer,
+    year:searchParams.year || 2024,
+    fuel:searchParams.fuel || '',
+    limit:searchParams.limit || 15,
+    model:searchParams.model || ''
+  });
   // console.log(allCars);
+ 
+
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
   return (
     <main className="overflow-hidden">

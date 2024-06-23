@@ -1,7 +1,7 @@
 
 // const fetch = require('node-fetch');
 
-import { CarProps } from "@/types";
+import { CarProps, FilterProps } from "@/types";
 
 // const url = 'https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=corolla';
 // const options = {
@@ -19,13 +19,14 @@ import { CarProps } from "@/types";
 // } catch (error) {
 // 	console.error(error);
 // }
-export async function fetchCars() {
+export async function fetchCars(filters:FilterProps) {
+  const {manufacturer,year,model,limit,fuel}=filters
     const headers= {
         'x-rapidapi-key': '42c6397e16msh1aac57ca9ff561bp1eba90jsnb6446742d2d1',
         'x-rapidapi-host': 'cars-by-api-ninjas.p.rapidapi.com'
       }
 
-      const response = await fetch('https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=carrera', {headers:headers});
+      const response = await fetch(`https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?model=${manufacturer} & year=${year} & model=${model} & limit=${limit} & fueltype=${fuel}`, {headers:headers});
       const result=await response.json();
       return result;
     }
